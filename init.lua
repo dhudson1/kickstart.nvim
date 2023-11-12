@@ -111,6 +111,16 @@ require('lazy').setup({
     },
   },
 
+  {
+    'rmagatti/auto-session',
+    config = function()
+      require("auto-session").setup {
+        log_level = "error",
+        auto_session_suppress_dirs = { "~/"},
+      }
+    end
+  },
+
   -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim', opts = {} },
   {
@@ -513,7 +523,7 @@ require('mason-lspconfig').setup()
 local servers = {
   -- clangd = {},
   -- gopls = {},
-  -- pyright = {},
+  pyright = { filetypes = {'py'}, pyright = {autoImportCompletion=true}, pytho = {analysis = {autoSearchPaths=true, diagnosticMode = 'openFilesONly', useLibraryCodeForTypes = true, typeCheckingMode = 'off' }}},
   -- rust_analyzer = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
