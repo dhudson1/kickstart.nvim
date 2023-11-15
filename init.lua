@@ -364,13 +364,14 @@ end
 vim.api.nvim_create_user_command('LiveGrepGitRoot', live_grep_git_root, {})
 -- Some personally helpful git commands
 vim.api.nvim_create_user_command('GCF', function (args)
+  vim.cmd("w")
   vim.cmd("G add %")
   local additional_args = ""
   for _, arg in pairs(args.fargs) do
     additional_args = additional_args .. " " .. arg
   end
   vim.cmd("G commit" .. additional_args)
-end, {force=false, desc="Git commit the current file. All args are passed along.", nargs="*"})
+end, {force=false, desc="Writes the current file before git committing the current file. All args are passed along.", nargs="*"})
 
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
