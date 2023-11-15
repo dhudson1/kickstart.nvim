@@ -283,6 +283,7 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
+vim.o.shell = '/bin/zsh --login'
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
@@ -523,10 +524,16 @@ require('mason-lspconfig').setup()
 local servers = {
   -- clangd = {},
   -- gopls = {},
-  pyright = { filetypes = {'py'}, pyright = {autoImportCompletion=true}, pytho = {analysis = {autoSearchPaths=true, diagnosticMode = 'openFilesONly', useLibraryCodeForTypes = true, typeCheckingMode = 'off' }}},
+  pyright = {},
+  --   filetypes = {'py'},
+  --   pyright = { autoImportCompletion = true },
+  --   venv = 'DEF_PY3_VENV',
+  --   venvPath = '~/.virtualenvs',
+  -- },
   -- rust_analyzer = {},
-  -- tsserver = {},
+  tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
+  terraformls = { filetypes = {'tf', 'terraform', 'tfvars', 'terraform-vars'} },
 
   lua_ls = {
     Lua = {
@@ -560,6 +567,13 @@ mason_lspconfig.setup_handlers {
     }
   end,
 }
+
+vim.api.nvim_create_autocmd({"BufWritePre"}, {
+  pattern = {"*.tf", "*.tfvars"},
+  callback = function()
+    vim.lsp.buf.format()
+  end,
+})
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
