@@ -362,6 +362,15 @@ local function live_grep_git_root()
 end
 
 vim.api.nvim_create_user_command('LiveGrepGitRoot', live_grep_git_root, {})
+-- Some personally helpful git commands
+vim.api.nvim_create_user_command('GCF', function (args)
+  vim.cmd("G add %")
+  local additional_args = ""
+  for _, arg in pairs(args.fargs) do
+    additional_args = additional_args .. " " .. arg
+  end
+  vim.cmd("G commit" .. additional_args)
+end, {force=false, desc="Git commit the current file. All args are passed along.", nargs="*"})
 
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
@@ -513,6 +522,8 @@ require('which-key').register {
 require('mason').setup()
 require('mason-lspconfig').setup()
 
+local terraform_filetypes = {'tf', 'terraform', 'tfvars', 'terraform-vars'}
+
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
 --
@@ -533,7 +544,7 @@ local servers = {
   -- rust_analyzer = {},
   tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
-  terraformls = { filetypes = {'tf', 'terraform', 'tfvars', 'terraform-vars'} },
+  terraformls = { filetypes = terraform_filetypes },
 
   lua_ls = {
     Lua = {
@@ -568,8 +579,13 @@ mason_lspconfig.setup_handlers {
   end,
 }
 
+local terraform_pattern = {}
+for idx, filetype in pairs(terraform_filetypes) do
+  terraform_pattern[idx] = "*." .. filetype
+end
+
 vim.api.nvim_create_autocmd({"BufWritePre"}, {
-  pattern = {"*.tf", "*.tfvars"},
+  pattern = terraform_pattern,
   callback = function()
     vim.lsp.buf.format()
   end,
