@@ -542,7 +542,7 @@ local servers = {
   --   venv = 'DEF_PY3_VENV',
   --   venvPath = '~/.virtualenvs',
   -- },
-  -- rust_analyzer = {},
+  rust_analyzer = {},
   tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
   terraformls = { filetypes = terraform_filetypes },
