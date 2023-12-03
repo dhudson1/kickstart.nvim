@@ -283,7 +283,7 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
-vim.o.shell = '/bin/zsh --login'
+vim.o.shell = '/bin/bash --login'
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
