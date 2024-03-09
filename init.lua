@@ -543,6 +543,7 @@ local servers = {
   --   venvPath = '~/.virtualenvs',
   -- },
   rust_analyzer = {},
+  rnix_lsp = {},
   tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
   terraformls = { filetypes = terraform_filetypes },
