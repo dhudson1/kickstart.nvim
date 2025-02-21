@@ -224,7 +224,18 @@ require('lazy').setup({
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
+    indent = {
+      enable = true,
+      disable = {"python"}
+
+    },
     build = ':TSUpdate',
+  },
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    ft = { "markdown" },
+    build = function() vim.fn["mkdp#util#install"]() end,
   },
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
@@ -283,7 +294,7 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
-vim.o.shell = '/bin/bash --login'
+vim.o.shell = vim.o.shell .. ' --login'
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
